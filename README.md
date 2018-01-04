@@ -19,15 +19,11 @@
 * Sentiment Analysis
 * Text Based Chatbot
 
-# Oreilly-Learning-TensorFlow
 
-### Content (book chapters):
-1.  Introduction -- no code 
-# Oreilly-OSCON2017-Learning-TensorFlow
-Code and slides for the 2-day TensorFlow training at OSCON 2017 https://conferences.oreilly.com/oscon/oscon-tx/public/schedule/detail/57856
+
 
 code to accompany blog posts  
-
+tensorflow 基础
 1. [Transfer learning from multiple pre-trained computer vision models](https://www.oreilly.com/ideas/transfer-learning-from-multiple-pre-trained-computer-vision-models)
 In this short blog post I describe the (somewhat under-utilized) method of combining multiple pre-trained cv models using stacking, to enhance classification results on a new dataset. 
 
@@ -49,13 +45,6 @@ If you like the book, please rate it on [Amazon](https://www.amazon.com/Learning
 
 
 
-
-
-
-
-# Implementation of recent Deep Learning papers
-
-# Papers
 
 - [Densely Connected Convolutional Network](http://arxiv.org/abs/1608.06993) implemented in the [DenseNet folder](https://github.com/tdeboissiere/DeepLearningImplementations/tree/master/DenseNet)
 
@@ -113,9 +102,6 @@ ICML2017论文ReproducibilityinMachineLearning-BasedStudies:AnExampleofTextMinin
 
 
 
-1. 千兆AORUS主板，英特尔酷睿i7-7700k“KabyLake”四核2.4GHz处理器
-2. 英伟达TitanXGPU,64gbram
-3. 3tb固态硬盘 
 
 ----------------------------------
 https://pair-code.github.io/facets/可嵌入到jupyter notebook 的数据可视化工具
