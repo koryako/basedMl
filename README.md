@@ -117,32 +117,38 @@ ICML2017论文ReproducibilityinMachineLearning-BasedStudies:AnExampleofTextMinin
 2. 英伟达TitanXGPU,64gbram
 3. 3tb固态硬盘 
 
+----------------------------------
+https://pair-code.github.io/facets/可嵌入到jupyter notebook 的数据可视化工具
+代码：https://github.com/PAIR-code/facets
 
 ---------------------------
 
-
-
-
-
-https://pair-code.github.io/facets/
-
-两个小的模型的输出特征拼在一起，然后再进行分配，拼成一个大模型。然后还可以增加Batchnorm、dropout、L2 
-
-我们发现ResNet效果是最好的，DenseNet效果紧随其后。VGG，Inceptionv3效果差一点。最差的是AlexNet和SqueezeNet MrDai08:15不同的模型集成手段，比如平均Bagging，BaggingEnsembleSelection，还有AttentionStacking，AttentionStacking是我们自己加入的一个东西，效果还不错。
-
-https://github.com/DeepScale/SqueezeNet 
-
-集成模型代码：https://github.com/kaldi-asr/kaldi
+语音识别工具：https://github.com/kaldi-asr/kaldi
 
 示例：https://github.com/kaldi-asr/kaldi/tree/master/egs/ami/s5/local/tfrnnlm 
 
+---------------------------------------------
+
+https://github.com/DeepScale/SqueezeNet 
+两个小的模型的输出特征拼在一起，然后再进行分配，拼成一个大模型。然后还可以增加Batchnorm、dropout、L2 
+我们发现ResNet效果是最好的，DenseNet效果紧随其后。VGG，Inceptionv3效果差一点。最差的是AlexNet和SqueezeNet
+不同的模型集成手段，比如平均Bagging，BaggingEnsembleSelection，还有AttentionStacking，AttentionStacking是我们自己加入的一个东西，效果还不错。
+
+http://www.sohu.com/a/163567410_114877
+
+
+
 http://www1.coe.neu.edu/~tvandal/
+
+https://github.com/tjvandal/bcsd-python 预测降水
 
 
  
  -------------------------------------
 
- http://deepcognition.ai/
+ http://deepcognition.ai/  深度学习云，速度挺快
+
+ tensorflow eager 版本  使得图形化编程即时化 可读性更强
  谷歌研究博客地址：https://research.googleblog.com/2017/10/eager-execution-imperative-define-by.html
  
  GitHub代码地址：https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/eager/README.md代码
