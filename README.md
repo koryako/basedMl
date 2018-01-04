@@ -136,14 +136,6 @@ https://github.com/DeepScale/SqueezeNet
 
 http://www.sohu.com/a/163567410_114877
 
-
-
-http://www1.coe.neu.edu/~tvandal/
-
-https://github.com/tjvandal/bcsd-python 预测降水
-
-
- 
  -------------------------------------
 
  http://deepcognition.ai/  深度学习云，速度挺快
@@ -159,3 +151,4 @@ https://github.com/tjvandal/bcsd-python 预测降水
 
   
 ---------------------------------------------
+
