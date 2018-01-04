@@ -82,3 +82,74 @@ If you like the book, please rate it on [Amazon](https://www.amazon.com/Learning
 - [Sobolev Training for Neural Networks](https://arxiv.org/abs/1706.04859) in the [Sobolev folder](https://github.com/tdeboissiere/DeepLearningImplementations/tree/master/Sobolev)
 
 - [Self-Normalizing Networks](https://arxiv.org/pdf/1706.02515.pdf) in the [SELU folder](https://github.com/tdeboissiere/DeepLearningImplementations/tree/master/SELU)
+
+-----------------------------------------------
+2018 论文复现赛
+要了解文中提到的复现赛详情，看这里：http://www.cs.mcgill.ca/~jpineau/ICLR2018-ReproducibilityChallenge.html
+  
+<自然》对1500名科学家的调查：http://www.nature.com/news/1-500-scientists-lift-the-lid-on-reproducibility-1.19970?WT.mc_id=FBK_NatureNews
+  
+ICML2017论文ReproducibilityinMachineLearning-BasedStudies:AnExampleofTextMining：https://openreview.net/pdf?id=By4l2PbQ-
+  
+  QZ报道：https://qz.com/1118671/the-titans-of-ai-are-getting-their-work-double-checked-by-students/
+
+  -------------------------------------------------
+
+ 论文
+ 
+ DSLR-QualityPhotosonMobileDeviceswithDeepConvolutionalNetworks 
+ StackGAN:TexttoPhoto-realisticImageSynthesiswithStackedGenerativeAdversarialNetworks 
+ High-QualityCorrespondenceandSegmentationEstimationforDual-LensSmart-PhonePortraits 
+ PhotographicImageSynthesiswithCascadedRefinementNetworks 
+ FoveaNet:Perspective-awareUrbanSceneParsing 
+ ArbitraryStyleTransferinReal-timewithAdaptiveInstanceNormalization
+ Dense-CaptioningEventsinVideos 
+ TowardsDiverseandNaturalImageDescriptionsviaaConditionalGAN 
+ Weakly-supervisedlearningofvisualrelations 
+ InferringandExecutingProgramsforVisualReasoning 
+ TurningCornersintoCameras:PrinciplesandMethods 
+ GeneratingHigh-QualityCrowdDensityMapsusingContextualPyramidCNNs 
+ DeepRoadMapper:ExtractingRoadTopologyfromAerialImages 
+
+
+
+1. 千兆AORUS主板，英特尔酷睿i7-7700k“KabyLake”四核2.4GHz处理器
+2. 英伟达TitanXGPU,64gbram
+3. 3tb固态硬盘 
+
+
+---------------------------
+
+
+
+
+
+https://pair-code.github.io/facets/
+
+两个小的模型的输出特征拼在一起，然后再进行分配，拼成一个大模型。然后还可以增加Batchnorm、dropout、L2 
+
+我们发现ResNet效果是最好的，DenseNet效果紧随其后。VGG，Inceptionv3效果差一点。最差的是AlexNet和SqueezeNet MrDai08:15不同的模型集成手段，比如平均Bagging，BaggingEnsembleSelection，还有AttentionStacking，AttentionStacking是我们自己加入的一个东西，效果还不错。
+
+https://github.com/DeepScale/SqueezeNet 
+
+集成模型代码：https://github.com/kaldi-asr/kaldi
+
+示例：https://github.com/kaldi-asr/kaldi/tree/master/egs/ami/s5/local/tfrnnlm 
+
+http://www1.coe.neu.edu/~tvandal/
+
+
+ 
+ -------------------------------------
+
+ http://deepcognition.ai/
+ 谷歌研究博客地址：https://research.googleblog.com/2017/10/eager-execution-imperative-define-by.html
+ 
+ GitHub代码地址：https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/eager/README.md代码
+ 
+ 使用手册：https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/eager/python/g3doc/guide.md 
+ 
+ 
+
+  
+---------------------------------------------
