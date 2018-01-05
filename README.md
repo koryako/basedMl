@@ -134,7 +134,29 @@ http://www.sohu.com/a/163567410_114877
  使用手册：https://github.com/tensorflow/tensorflow/blob/master/tensorflow/contrib/eager/python/g3doc/guide.md 
  
  
-
+Anh Nguyen的论文《Deep Neural Networks are Easily Fooled: High Confidence Predictions for Unrecognizable Images》
   
+
+  http://nbviewer.jupyter.org/github/BVLC/caffe/blob/master/examples/00-classification.ipynb
+
+  https://github.com/yosinski/deep-visualization-toolbox
+
+  见于Christian Szegedy的论文《Intriguing properties of neural networks
+》
+
+Understanding Deep Image Representations by Inverting Them
+
+A Neural Algorithm of Artistic Style
+
+
+至于Gram矩阵为什么能作为重建风格的依据，论文《Demystifying Neural Style Transfer》
+https://github.com/yosinski/deep-visualization-toolbox
+
+https://github.com/frombeijingwithlove/dlcv_for_beginners/tree/master/random_bonus/gan_n_cgan_2d_example
+
+https://zhuanlan.zhihu.com/p/27343585
+
+
+https://github.com/devnag/pytorch-generative-adversarial-networks
 ---------------------------------------------
 
