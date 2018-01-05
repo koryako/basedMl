@@ -158,5 +158,80 @@ https://zhuanlan.zhihu.com/p/27343585
 
 
 https://github.com/devnag/pytorch-generative-adversarial-networks
+
+https://github.com/mokemokechicken/keras_np
+i
+http://blog.csdn.net/sinat_33761963/article/details/53521206
+
+
+tensorflow框架下有一个序列到序列进行翻译的学习案例。 
+文档可以参见https://www.tensorflow.org/versions/r0.11/tutorials/seq2seq/index.html 
+代码可以参见https://github.com/tensorflow/tensorflow/tree/master/tensorflow/models/rnn/translate 
+
+生成字符级别的语言模型
+上一个笔记中将的语言生成模型是针对word来做的，这里的原理是完全一样的，只是针对chart来做。将所有chart，包括标点符号全部作为输入。大致的结构如下：
+
+![QQ截图20161027132426.png-71.6kB][131]
+
+这个案例的代码可以见：https://gist.github.com/karpathy/d4dee566867f8291f086
+
+来看一下模型在学习过程中的进展是如何的： 
+学习第100轮的时候，还很混乱 
+QQ截图20161027132843.png-14.7kB
+
+学习第300轮之后，已经能正确得插入词与词之间的空格 
+QQ截图20161027132851.png-20.2kB
+
+第500轮之后，知道了要加句号在某个位置，并且句号之后加一个空格 
+QQ截图20161027132858.png-14.7kB
+
+700-900轮时，已经非常像英文的句子，已经学会了使用引号，省略号等，学出来的词也已经是标准的英文单词 
+QQ截图20161027132905.png-11.4kB
+
+1200轮的时候，能识别人名要大写，并且单词和句子也几乎是正确的。 
+QQ截图20161027132912.png-21.7kB
+
+所以，RNN与学习的时候是一个逐步学习的过程。
+
+3.2 生成维基百科
+同样的原理，如果喂给RNN的是维基百科的内容，那么它也能在学习之后模仿写出维基百科。 
+已经有小伙伴整理了一部分维基百科的数据做成text的格式，有兴趣的小伙伴可以去下载数据测试一下。 
+数据地址：http://cs.stanford.edu/people/karpathy/char-rnn/wiki.txt
+
+3.3 生成模型写食谱
+同样，RNN也可以去模仿写食谱。这个案例的具体信息见以下链接。 
+案例：https://gist.github.com/nylki/1efbaa36635956d35bcc 
+代码：https://gist.github.com/karpathy/d4dee566867f8291f086 
+数据：http://www.ffts.com/recipes/lg/lg32965.zip
+
+3.4 生成模型写奥巴马演讲稿
+还有一些小伙伴尝试了用RNN去写奥巴马的演讲稿。 
+数据下载地址： 
+https://medium.com/@samim/obama-rnn-machine-generated-political-speeches-c8abd18a2ea0#.9sb793kbm
+
+3.5 合成音乐
+音乐也是一个时序的一个任务。将乐谱用一种方式表示出来输入RNN，预测完之后，再把它转换成音符。 
+具体的过程请见blog：https://highnoongmt.wordpress.com/2015/05/22/lisls-stis-recurrent-neural-networks-for-folk-music-generation/
+
+还有一个更高级的合成音乐案例，这里面还涉及到了乐理的一些知识， 
+具体请看blog：http://www.hexahedria.com/2015/08/03/composing-music-with-recurrent-neural-networks/
+
+[13lqh7xlyv2owk5rw4fyslus2d/QQ%E6%88%AA%E5%9B%BE20161027145714.png
+
+
+目前正在进行更复杂的内存结构的趋势。端到端内存网络允许网络在输出之前读取相同的输入序列多次，在每一步更新内存内容。例如，通过对输入的故事进行多个推理步骤来回答问题
+
+在未来，我们可能会看到记忆和注意力机制之间的更清晰的区别，也许是沿着强化学习神经图灵机的路线，它试图学习访问模式来处理外部接口。
+
+http://deeplearning.cs.cmu.edu/ 课程
+
+https://github.com/dennybritz/deeplearning-papernotes 重要论文汇总
+
+http://www.wildml.com/2015/10/recurrent-neural-networks-tutorial-part-3-backpropagation-through-time-and-vanishing-gradients/
+
+
+https://github.com/rockingdingo/deepnlp
+
+https://stackoverflow.com/questions/40601552/visualizing-attention-activation-in-tensorflow
 ---------------------------------------------
 
