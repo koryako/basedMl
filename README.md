@@ -19,8 +19,10 @@
 * Sentiment Analysis
 * Text Based Chatbot
 
-
-
+https://www.cs.waikato.ac.nz/ml/weka/ java api frameworks
+https://github.com/ivan-vasilev/neuralnetworks java 库
+https://software.intel.com/zh-cn/ai-academy/students/kits  intel ml 教程
+http://neuralnetworksanddeeplearning.com/index.html  基础
 
 code to accompany blog posts  
 tensorflow 基础
