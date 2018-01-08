@@ -233,5 +233,7 @@ http://www.wildml.com/2015/10/recurrent-neural-networks-tutorial-part-3-backprop
 https://github.com/rockingdingo/deepnlp
 
 https://stackoverflow.com/questions/40601552/visualizing-attention-activation-in-tensorflow
+
+
 ---------------------------------------------
 
