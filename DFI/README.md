@@ -1,5 +1,5 @@
 # DFI
-
+特征差值
 Keras implementation of [Deep Feature Interpolation for Image Content Changes](https://arxiv.org/pdf/1611.05507v1.pdf) by Paul Upchurch, Jacob Gardner, Kavita Bala, Robert Pless, Noah Snavely, Kilian Weinberger
 
 The technique is applied on the [LFW](http://vis-www.cs.umass.edu/lfw/) with minor modifications.
