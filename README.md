@@ -235,5 +235,8 @@ http://www.wildml.com/2015/10/recurrent-neural-networks-tutorial-part-3-backprop
 https://github.com/rockingdingo/deepnlp
 
 https://stackoverflow.com/questions/40601552/visualizing-attention-activation-in-tensorflow
+
+
+神经网络已经可以有效率的解决不同的问题，但是，即便仅仅对图片分类任务来说，设计他们的结构需要有能力的，我们的目标是最小化人类的参与度，所以我们使用进化算法来自动发现神经网络. 尽管需要显著的计算要求，我们展示了使用进化模型对去年发布的一些模型提高的精度。特别是，我们使用这个技术在cifar-10 和cifar-100数据集上进行史无前例的发现模型。
 ---------------------------------------------
 

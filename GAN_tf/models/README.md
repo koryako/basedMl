@@ -1,1 +1,0 @@
-# Tensorflow model and checkpoint repository
