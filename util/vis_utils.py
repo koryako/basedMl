@@ -1,8 +1,37 @@
-from builtins import range
-from past.builtins import xrange
+#from builtins import range
+#from past.builtins import xrange
 
 from math import sqrt, ceil
 import numpy as np
+
+def show_plot(data,num=0, multi=False):
+    if multi is True:
+        N_IMAGES = num
+        img = np.vstack([np.hstack([img.reshape(28, 28) 
+                            for img in data.train.images[np.random.choice(1000, N_IMAGES)]])
+                 for i in range(N_IMAGES)])
+        img = np.logical_not(img)
+        
+        title="{} random digits".format(num*num)
+    else:
+        if num is 0:
+            img = data    
+            #img = data.train.images[:1000]
+            img =np.logical_not(img).T
+            title="Each column is an image unrolled..."
+        else:
+            IMAGE_IX_IN_DATASET = num
+            img = data.train.images[IMAGE_IX_IN_DATASET].reshape(28, 28)
+            lbl = data.train.labels[IMAGE_IX_IN_DATASET].argmax()
+            title="This is supposed to be a {}".format(lbl)
+            # Get the raw (vector) image and labael -- see what it looks like when not a rectangle       
+    # Plot 
+    plt.figure()
+    plt.imshow(img, cmap='gray')
+    plt.gca().get_xaxis().set_visible(False)
+    plt.gca().get_yaxis().set_visible(False)
+    plt.title(title)
+    plt.show()
 
 def visualize_grid(Xs, ubound=255.0, padding=1):
     """

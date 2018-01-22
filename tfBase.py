@@ -29,6 +29,7 @@ print(hw)
 
 
 import sys
+from util.vis_utils import show_plot
 from util.minst_input_data import read_data_sets
 # This is where the MNIST data will be downloaded to. If you already have it on your 
 # machine then set the path accordingly to prevent an extra download. 
@@ -43,34 +44,7 @@ print("Luckily, there are also {} matching labels.".format(len(data.train.labels
 import matplotlib.pyplot as plt 
 
 
-def show_plot(data,num=0, multi=False):
-    if multi is True:
-        N_IMAGES = num
-        img = np.vstack([np.hstack([img.reshape(28, 28) 
-                            for img in data.train.images[np.random.choice(1000, N_IMAGES)]])
-                 for i in range(N_IMAGES)])
-        img = np.logical_not(img)
-        
-        title="{} random digits".format(num*num)
-    else:
-        if num is 0:
-            img = data    
-            #img = data.train.images[:1000]
-            img =np.logical_not(img).T
-            title="Each column is an image unrolled..."
-        else:
-            IMAGE_IX_IN_DATASET = num
-            img = data.train.images[IMAGE_IX_IN_DATASET].reshape(28, 28)
-            lbl = data.train.labels[IMAGE_IX_IN_DATASET].argmax()
-            title="This is supposed to be a {}".format(lbl)
-            # Get the raw (vector) image and labael -- see what it looks like when not a rectangle       
-    # Plot 
-    plt.figure()
-    plt.imshow(img, cmap='gray')
-    plt.gca().get_xaxis().set_visible(False)
-    plt.gca().get_yaxis().set_visible(False)
-    plt.title(title)
-    plt.show()
+
 
 #show_plot(data.train.images[:1000])  
 """
@@ -92,7 +66,7 @@ plt.gca().get_yaxis().set_visible(False)
 plt.title("Each column is the center of an image, unrolled...")
 plt.show()
 """
-
+"""
 # We start by building the model 
 x = tf.placeholder(tf.float32, [None, 784])
 W = tf.Variable(tf.zeros([784, 10]))
@@ -171,3 +145,97 @@ conf_mat = confusion_matrix(y_true_vec.argmax(axis=1), y_pred_vec.argmax(axis=1)
 
 # pd.DataFrame is used for the nice print format
 print(pd.DataFrame(conf_mat))
+"""
+
+def weight_variable(shape):
+    initial = tf.truncated_normal(shape, stddev=0.1)
+    return tf.Variable(initial)
+
+
+def bias_variable(shape):
+    initial = tf.constant(0.1, shape=shape)
+    return tf.Variable(initial)
+
+
+def conv2d(x, W):
+    return tf.nn.conv2d(x, W, strides=[1, 1, 1, 1], padding='SAME')
+
+def conv_layer(input, shape):
+    W = weight_variable(shape)
+    b = bias_variable([shape[3]])
+    return tf.nn.relu(conv2d(input, W) + b)
+
+def max_pool_2x2(x):
+    return tf.nn.max_pool(x, ksize=[1, 2, 2, 1],
+                          strides=[1, 2, 2, 1], padding='SAME')
+
+def full_layer(input, size):
+    in_size = int(input.get_shape()[1])
+    W = weight_variable([in_size, size])
+    b = bias_variable([size])
+    return tf.matmul(input, W) + b
+
+
+# The image input -- a 1X784 vector 
+x = tf.placeholder(tf.float32, shape=[None, 784])
+
+# The correct label
+y_ = tf.placeholder(tf.float32, shape=[None, 10])
+
+
+# With CNNs we have a spatial notion, and need the image in the correct shape!
+x_image = tf.reshape(x, [-1, 28, 28, 1])
+
+# First conv layer
+conv1 = conv_layer(x_image, shape=[5, 5, 1, 32])
+conv1_pool = max_pool_2x2(conv1)
+
+# Second conv layer
+conv2 = conv_layer(conv1_pool, shape=[5, 5, 32, 64])
+conv2_pool = max_pool_2x2(conv2)
+
+# We flatten the rectangular image representation before the fully-connected part 
+conv2_flat = tf.reshape(conv2_pool, [-1, 7*7*64])
+full_1 = tf.nn.relu(full_layer(conv2_flat, 1024))
+
+# Dropout
+keep_prob = tf.placeholder(tf.float32)
+full1_drop = tf.nn.dropout(full_1, keep_prob=keep_prob)
+
+# Readout layer 
+y_conv = full_layer(full1_drop, 10)
+
+
+cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=y_conv, labels=y_))
+train_step = tf.train.AdamOptimizer(1e-4).minimize(cross_entropy)
+correct_prediction = tf.equal(tf.argmax(y_conv, 1), tf.argmax(y_, 1))
+accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
+
+STEPS = 10000
+MINIBATCH_SIZE = 50
+
+mnist=data
+sess =  tf.Session()
+sess.run(tf.global_variables_initializer())
+
+for i in range(STEPS):
+    batch = mnist.train.next_batch(MINIBATCH_SIZE)
+
+    sess.run(train_step, feed_dict={x: batch[0], y_: batch[1], keep_prob: 0.5})
+
+    if i % 200 == 0:
+        valid_accuracy = sess.run(accuracy, 
+                                  feed_dict={x: mnist.validation.images, 
+                                             y_: mnist.validation.labels,
+                                             keep_prob: 1.0})
+        print("step {}, validation accuracy {}".format(i, valid_accuracy))
+
+
+# Split the test part into 10 equal segments 
+X = mnist.test.images.reshape(10, 1000, 784)
+Y = mnist.test.labels.reshape(10, 1000, 10)
+test_accuracy = np.mean([sess.run(accuracy, feed_dict={x:X[i], y_:Y[i], 
+                                                       keep_prob:1.0}) for i in range(10)])#keep_prob is dropout
+
+print("test accuracy: {:.4f}%".format(test_accuracy*100.))
+sess.close()
