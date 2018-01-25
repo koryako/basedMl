@@ -59,3 +59,26 @@ grid = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=-1)
 init_mode = ['uniform', 'lecun_uniform', 'normal', 'zero', 'glorot_normal', 'glorot_uniform', 'he_normal', 'he_uniform']
 param_grid = dict(init_mode=init_mode)
 grid = GridSearchCV(estimator=model, param_grid=param_grid, n_jobs=-1)
+
+
+def build_model():
+   model=Sequential()
+   model.add(Convolution2D(32,3,3,input_shape=(img_width,img_height,3)))
+   model.add(Activation('relu'))
+   model.add(MaxPooling2D(pool_size=(2,2)))
+   
+   model.add(Convolution2D(32,3,3))
+   model.add(Activation('relu'))
+   model.add(MaxPooling2D(pool_size=(2,2)))
+
+   model.add(Convolution2D(64,3,3))
+   model.add(Activation('relu'))
+   model.add(MaxPooling2D(pool_size=(2,2)))
+   
+   model.add(Flatten())
+   model.add(Dense(64))
+   model.add(Activation('relu'))
+   
+   model.add(Dropout(0.5))
+   model.add(Dense(1))
+   modle.add(Activation('sigmoid'))
