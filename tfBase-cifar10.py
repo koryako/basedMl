@@ -143,6 +143,20 @@ with tf.Session() as sess:
         print('Validation')
         run_model(sess,y_out,mean_loss,X_val,y_val,1,64)
 """
+
+def batchnorm(Ylogits, is_test, iteration, offset, convolutional=False):
+    exp_moving_avg = tf.train.ExponentialMovingAverage(0.999, iteration) # adding the iteration prevents from averaging across non-existing iterations
+    bnepsilon = 1e-5
+    if convolutional:
+        mean, variance = tf.nn.moments(Ylogits, [0, 1, 2])
+    else:
+        mean, variance = tf.nn.moments(Ylogits, [0])
+    update_moving_averages = exp_moving_avg.apply([mean, variance])
+    m = tf.cond(is_test, lambda: exp_moving_avg.average(mean), lambda: mean)
+    v = tf.cond(is_test, lambda: exp_moving_avg.average(variance), lambda: variance)
+    Ybn = tf.nn.batch_normalization(Ylogits, m, v, offset, None, bnepsilon)
+    return Ybn, update_moving_averages
+
 # Now we're going to feed a random batch into the model 
 # and make sure the output is the right size
 x = np.random.randn(64, 32, 32,3)
@@ -154,3 +168,82 @@ with tf.Session() as sess:
         
         print(ans.shape)
         print(np.array_equal(ans.shape, np.array([64, 10])))
+"""
+m = K.mean(X, axis=-1, keepdims=True)#计算均值  
+std = K.std(X, axis=-1, keepdims=True)#计算标准差  
+X_normed = (X - m) / (std + self.epsilon)#归一化  
+out = self.gamma * X_normed + self.beta#重构变换  
+"""
+
+
+"""
+1、《Batch Normalization: Accelerating Deep Network Training by  Reducing Internal Covariate Shift》
+
+2、《Spatial Transformer Networks》
+
+3、https://github.com/fchollet/keras
+"""
+
+"""
+input_shape = self.input_shape  
+ reduction_axes = list(range(len(input_shape)))  
+ del reduction_axes[self.axis]  
+ broadcast_shape = [1] * len(input_shape)  
+ broadcast_shape[self.axis] = input_shape[self.axis]  
+ if train:  
+     m = K.mean(X, axis=reduction_axes)  
+     brodcast_m = K.reshape(m, broadcast_shape)  
+     std = K.mean(K.square(X - brodcast_m) + self.epsilon, axis=reduction_axes)  
+     std = K.sqrt(std)  
+     brodcast_std = K.reshape(std, broadcast_shape)  
+     mean_update = self.momentum * self.running_mean + (1-self.momentum) * m  
+     std_update = self.momentum * self.running_std + (1-self.momentum) * std  
+     self.updates = [(self.running_mean, mean_update),  
+                     (self.running_std, std_update)]  
+     X_normed = (X - brodcast_m) / (brodcast_std + self.epsilon)  
+ else:  
+     brodcast_m = K.reshape(self.running_mean, broadcast_shape)  
+     brodcast_std = K.reshape(self.running_std, broadcast_shape)  
+     X_normed = ((X - brodcast_m) /  
+                 (brodcast_std + self.epsilon))  
+ out = K.reshape(self.gamma, broadcast_shape) * X_normed + K.reshape(self.beta, broadcast_shape)  
+ """
+
+"""
+def bn(x, is_training):  
+    x_shape = x.get_shape()  
+    params_shape = x_shape[-1:]  
+  
+    axis = list(range(len(x_shape) - 1))  
+  
+    beta = _get_variable('beta', params_shape, initializer=tf.zeros_initializer())  
+    gamma = _get_variable('gamma', params_shape, initializer=tf.ones_initializer())  
+  
+    moving_mean = _get_variable('moving_mean', params_shape, initializer=tf.zeros_initializer(), trainable=False)  
+    moving_variance = _get_variable('moving_variance', params_shape, initializer=tf.ones_initializer(), trainable=False)  
+  
+    # These ops will only be preformed when training.  
+    mean, variance = tf.nn.moments(x, axis)  
+    update_moving_mean = moving_averages.assign_moving_average(moving_mean, mean, BN_DECAY)  
+    update_moving_variance = moving_averages.assign_moving_average(moving_variance, variance, BN_DECAY)  
+    tf.add_to_collection(UPDATE_OPS_COLLECTION, update_moving_mean)  
+    tf.add_to_collection(UPDATE_OPS_COLLECTION, update_moving_variance)  
+  
+    mean, variance = control_flow_ops.cond(  
+        is_training, lambda: (mean, variance),  
+        lambda: (moving_mean, moving_variance))  
+  
+    return tf.nn.batch_normalization(x, mean, variance, beta, gamma, BN_EPSILON)  
+"""
+
+"""
+另外，这里有使用batch
+ normalization的示例：martin-gorner/tensorflow-mnist-tutorial
+ https://github.com/martin-gorner/tensorflow-mnist-tutorial/blob/master/mnist_4.2_batchnorm_convolutional.py
+
+还可以参考：resnet：https://github.com/MachineLP/tensorflow-resnet
+
+还可以看大师之作：CNN和RNN中如何引入BatchNorm   http://blog.csdn.net/malefactor/article/details/51549771
+
+训练好的模型加载：tensorflow中batch normalization的用法  http://www.cnblogs.com/hrlnw/p/7227447.html
+"""
