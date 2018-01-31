@@ -22,7 +22,7 @@ for intent in intents['intents']:
        if intent['tag'] not in classes:
            classes.append(intent['tag'])
 
-print words
+print (words)
 
 
             

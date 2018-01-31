@@ -29,7 +29,19 @@ import numpy as np
 from six.moves import urllib
 from six.moves import xrange  # pylint: disable=redefined-builtin
 import tensorflow as tf
-
+"""
+import cv2
+import glob
+import time
+import pickle
+import numpy as numpy
+import matplotlic.image as mpimg
+import matplotlib.pyplot as pyplot
+from skimage.feature import hog
+from sklearn.svm import LinearSVC
+from sklearn.preprocessing import StandardScaler
+from scipy.ndimage.measurements import label
+"""
 # Step 1: Download the data.
 url = 'http://mattmahoney.net/dc/'
 
