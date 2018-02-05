@@ -9,3 +9,6 @@ References:
 - Research paper by Stroh and Mathur
 - http://smerity.com/articles/2015/keras_qa.html
 - Good explanation of end to end memory networks: https://youtu.be/ZwvWY9Yy76Q
+
+
+
