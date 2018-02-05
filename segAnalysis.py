@@ -37,7 +37,7 @@ s1.sentiments
 """
 
 # Select only the two columns we require. Game title and its corresponding emotion
-dataframe = pd.read_csv('../datasets/loans.csv').ix[:, 1:3]
+dataframe = pd.read_csv('../datasets/Sentiment_Analysiy/ign.csv').ix[:, 1:3]
 # Fill null values with empty strings
 dataframe.fillna(value='', inplace=True)
 
