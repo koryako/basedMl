@@ -126,7 +126,7 @@ def getData(path,s=False):
 def count(train_stories,test_stories):#统计所有单词的数量
     vocab = set()
     for story, q, answer in train_stories + test_stories:
-        vocab |= set(story + q + [answer])
+        vocab= set(story + q + [answer])
         vocab = sorted(vocab)
     
 
@@ -192,14 +192,15 @@ def pad_wordVec(vocab,train_stories,test_stories,story_maxlen,query_maxlen):
     print('Compiling...')
 
 if __name__ == '__main__':
-    """
+ 
     path="../../datasets"
     train,test=getData(path)
+    print(train[0])
     vocab,vocab_size,story_maxlen,query_maxlen=count(train,test)
 
     pad_wordVec(vocab,train,test,story_maxlen,query_maxlen)#转化为词向量
-    """
-
+   
+"""
     #-*- coding:utf8 -*-
     from numpy import *
 
@@ -253,6 +254,7 @@ if __name__ == '__main__':
         p0Vect = p0Num/p0Denom
         p1Vect = p1Num/p1Denom
         return p0Vect, p1Vect, pAbusive 
+"""
 
    
     

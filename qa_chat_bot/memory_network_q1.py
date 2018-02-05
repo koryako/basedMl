@@ -162,12 +162,12 @@ print('answers_test shape:', answers_test.shape)
 print('-')
 print('Compiling...')
 
-# placeholders
+# 定义张量
 input_sequence = Input((story_maxlen,))
 question = Input((query_maxlen,))
 
-# encoders
-# embed the input sequence into a sequence of vectors
+
+# 定义 词向量
 input_encoder_m = Sequential()
 input_encoder_m.add(Embedding(input_dim=vocab_size,
                               output_dim=64))
