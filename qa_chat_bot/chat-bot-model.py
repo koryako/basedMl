@@ -18,7 +18,7 @@ from keras.preprocessing.sequence import pad_sequences
 from functools import reduce
 import tarfile
 import re
-
+#https://github.com/keras-team/keras/blob/master/examples/babi_rnn.py
 #https://github.com/brilee/MuGo
 """
 with open('intents.json') as json_data:
