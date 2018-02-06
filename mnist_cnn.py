@@ -2,14 +2,17 @@ from tensorflow.examples.tutorials.mnist import input_data
 import tensorflow as tf
 import numpy as np
 
-from layers import conv_layer, max_pool_2x2, full_layer
+from util.layer import conv_layer, max_pool_2x2, full_layer
 
-DATA_DIR = '/tmp/data'
+from util.minst_input_data import read_data_sets
 MINIBATCH_SIZE = 50
 STEPS = 5000
 
+DATA_DIR = '../datasets/minist/'
 
-mnist = input_data.read_data_sets(DATA_DIR, one_hot=True)
+# Load data 
+mnist  = read_data_sets(DATA_DIR, one_hot=True)
+
 
 x = tf.placeholder(tf.float32, shape=[None, 784])
 y_ = tf.placeholder(tf.float32, shape=[None, 10])
@@ -53,3 +56,148 @@ with tf.Session() as sess:
         [sess.run(accuracy, feed_dict={x: X[i], y_: Y[i], keep_prob: 1.0}) for i in range(10)])
 
 print("test accuracy: {}".format(test_accuracy))
+
+
+"""
+We construct a confusion matrix for the softmax regression on MNIST digits.
+1. Model is built and run like before.
+2. During the test phase we use y_true, y_pred in the fetch argument, since these
+are the vars we will need for the confusion matrix.
+3. We then use the built-in confusion_matrix method in sklearn.metrics to complete
+the task.
+"""
+
+"""
+import sys
+import tensorflow as tf
+from util.minst_input_data import read_data_sets
+import pandas as pd
+from sklearn.metrics import confusion_matrix
+DATA_DIR = '../datasets/minist/'
+
+# Load data 
+data = read_data_sets(DATA_DIR, one_hot=True)
+
+print("Nubmer of training-set images: {}".format(len(data.train.images)))
+print("Luckily, there are also {} matching labels.".format(len(data.train.labels)))
+
+
+
+# This is where the MNIST data will be downloaded to. If you already have it on your
+# machine then set the path accordingly to prevent an extra download.
+#DATA_DIR = '/tmp/data' if not 'win' in sys.platform else "c:\\tmp\\data"
+
+
+
+NUM_STEPS = 1000
+MINIBATCH_SIZE = 100
+
+# We start by building the model
+x = tf.placeholder(tf.float32, [None, 784])
+W = tf.Variable(tf.zeros([784, 10]))
+#b = tf.Variable(tf.zeros([10]))
+y_true = tf.placeholder(tf.float32, [None, 10])
+y_pred = tf.matmul(x, W)
+#y_pred = tf.matmul(x, W) + b
+
+cross_entropy = \
+    tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=y_pred, labels=y_true))
+
+gd_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
+
+correct_mask = tf.equal(tf.argmax(y_pred, 1), tf.argmax(y_true, 1))
+accuracy = tf.reduce_mean(tf.cast(correct_mask, tf.float32))
+
+with tf.Session() as sess:
+
+    # Train
+    sess.run(tf.global_variables_initializer())
+    for _ in range(NUM_STEPS):
+        batch_xs, batch_ys = data.train.next_batch(MINIBATCH_SIZE)
+        sess.run(gd_step, feed_dict={x: batch_xs, y_true: batch_ys})
+
+    # Test
+    # Here we use the fetches [y_true, y_pred] since those are the vars we will need to
+    # construct the confusion matrix.
+    y_true_vec, y_pred_vec = sess.run([y_true, y_pred],
+                              feed_dict={x: data.test.images, y_true: data.test.labels})
+
+# confusion_matrix() requires the actual predictions, not the probability vectors, so we use
+# .argmax(axis=1) to select the class with the largest probability.
+conf_mat = confusion_matrix(y_true_vec.argmax(axis=1), y_pred_vec.argmax(axis=1))
+
+# pd.DataFrame is used for the nice print format
+print(pd.DataFrame(conf_mat))
+
+"""
+
+
+
+
+
+"""
+We add a bias term to the regression model. To do so we need to change only 2 lines of code.
+First, we define a bias variable (one for each of the 10 digits):
+b = tf.Variable(tf.zeros([10]))
+
+Next, we add it to the model:
+y_pred = tf.matmul(x, W) + b
+
+So the model is now:
+    y_pred(i) = <x, w_i> + b_i,
+and in matrix form:
+    y_pred = Wx + b
+"""
+"""
+import sys
+import tensorflow as tf
+from tensorflow.examples.tutorials.mnist import input_data
+
+import pandas as pd
+from sklearn.metrics import confusion_matrix
+
+from util.minst_input_data import read_data_sets
+
+
+DATA_DIR = '../datasets/minist/'
+# This is where the MNIST data will be downloaded to. If you already have it on your
+# machine then set the path accordingly to prevent an extra download.
+
+
+# Load data
+data = read_data_sets(DATA_DIR, one_hot=True)
+
+NUM_STEPS = 1000
+MINIBATCH_SIZE = 100
+
+# We start by building the model
+x = tf.placeholder(tf.float32, [None, 784])
+W = tf.Variable(tf.zeros([784, 10]))
+b = tf.Variable(tf.zeros([10]))
+
+y_true = tf.placeholder(tf.float32, [None, 10])
+y_pred = tf.matmul(x, W) + b
+
+cross_entropy = \
+    tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=y_pred, labels=y_true))
+
+gd_step = tf.train.GradientDescentOptimizer(0.5).minimize(cross_entropy)
+
+correct_mask = tf.equal(tf.argmax(y_pred, 1), tf.argmax(y_true, 1))
+accuracy = tf.reduce_mean(tf.cast(correct_mask, tf.float32))
+
+with tf.Session() as sess:
+
+    # Train
+    sess.run(tf.global_variables_initializer())
+    for _ in range(NUM_STEPS):
+        batch_xs, batch_ys = data.train.next_batch(MINIBATCH_SIZE)
+        sess.run(gd_step, feed_dict={x: batch_xs, y_true: batch_ys})
+
+    # Test
+    is_correct, acc = sess.run([correct_mask, accuracy],
+                               feed_dict={x: data.test.images, y_true: data.test.labels})
+
+print("Accuracy: {:.4}%".format(acc*100))
+
+"""
