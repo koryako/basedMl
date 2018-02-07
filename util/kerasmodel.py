@@ -32,7 +32,7 @@ def minstPlot():
         filename = "mnist%d.png" % labels[i]
         image = images[i]
         plt.imshow(image, cmap='gray')
-        plt.savefig(filename)
+        #plt.savefig(filename)
         plt.show()
 
     plt.close('all')
