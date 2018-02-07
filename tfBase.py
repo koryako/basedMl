@@ -239,3 +239,33 @@ test_accuracy = np.mean([sess.run(accuracy, feed_dict={x:X[i], y_:Y[i],
 
 print("test accuracy: {:.4f}%".format(test_accuracy*100.))
 sess.close()
+
+
+import matplotlib.image as img
+import matplotlib.pyplot as plt
+import numpy as np
+
+def readfile(path):
+    try:
+        data = img.imread(path)
+        return data
+    except:
+        return np.array([])
+
+
+def displayimage(path):
+    data = img.imread(path)
+    plt.imshow(data)
+    plt.show()
+    return
+    
+if __name__ == '__main__':
+
+
+    # create a tensorflow constant string
+    hello = tf.constant('Hello World!')
+
+    # run within a session and print
+    with tf.Session() as session:
+        print("Tensorflow version: " + tf.__version__)
+        print(hello.eval())
